@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator</title>
+</head>
+
+<style>
+   body{
+      width: 100%;
+   }
+    *{
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #kalkulator-container{
+        padding: 10px;
+    }
+
+    .kbutton{
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        border: none;
+        color: #ffffff;
+        background-color: #48dfd8;
+        display: block;
+        float: left;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        outline: 0;
+        border: 1px solid transparent;
+        font-size: 14pt;
+    }
+
+    .kbutton:hover{
+        background-color: #ffffff;
+        color: #48dfd8;
+        border: 1px solid #48dfd8;
+    }
+    .container
+    {
+       width: 100%;
+    }
+    .row{
+       margin: 0 auto ;
+        content: " ";
+        clear: both;
+        display: block;
+    }
+
+    #displaycalc{
+        width: 230px;
+        height: 50px;
+        border: 1px solid #48dfd8;
+        margin-bottom: 10px;
+        outline: 0;
+        font-size: 14pt;
+        text-align: right;
+        line-height: 50px;
+        color: #2865b6;
+        padding: 0px 10px;
+    }
+</style>
+<body>
+   <h1 style="color: #2865b6;"> Kalkulator Sederhana</h1>
+    <div id="displaycalc">
+        0
+    </div>
+    <div class="row">
+        <button type="button" class="kbutton number">9</button>
+        <button type="button" class="kbutton number">8</button>
+        <button type="button" class="kbutton number">7</button>
+        <button type="button" class="kbutton operator">+</button>
+    </div>
+    <div class="row">
+        <button type="button" class="kbutton number">6</button>
+        <button type="button" class="kbutton number">5</button>
+        <button type="button" class="kbutton number">4</button>
+        <button type="button" class="kbutton operator">-</button>
+    </div>
+    <div class="row">
+        <button type="button" class="kbutton number">3</button>
+        <button type="button" class="kbutton number">2</button>
+        <button type="button" class="kbutton number">1</button>
+        <button type="button" class="kbutton operator">*</button>
+    </div>
+    <div class="row">
+        <button type="button" class="kbutton number">0</button>
+        <button type="button" class="kbutton number">.</button>
+        <button type="button" class="kbutton" id="ac">AC</button>
+        <button type="button" class="kbutton operator">/</button>
+    </div>
+
+    <div class="row">
+        <button type="button" class="kbutton" id="hasil" style="width: 230px">=</button>
+    </div>
+</body>
+</html>
+<script>
+   document.addEventListener('DOMContentLoaded', function(){
+    var numberBtn = document.querySelectorAll('.number'); 
+    var acBtn = document.querySelector('#ac');
+    var operatorBtn = document.querySelectorAll('.operator');
+    var displaycalc = document.querySelector('#displaycalc');
+    var hasil = document.querySelector('#hasil');
+    
+    var iteration = 1;
+    var n1 = ""; 
+    var n2 = ""; 
+    var operator = ""; 
+    
+
+    numberBtn.forEach(function(elem){ 
+        elem.addEventListener('click', function () {
+            if(iteration === 1){ 
+                n1 += elem.innerText;
+            }
+            else if(iteration >= 3){
+                n2 += elem.innerText; 
+                iteration++;
+            }
+            displaycalc.innerText = n1 + " " + operator + " " + n2;
+        });
+    });
+
+    operatorBtn.forEach(function (elem) {  
+        elem.addEventListener('click', function () { 
+            iteration = 2; 
+            if (iteration === 2) { 
+                operator = elem.innerText; 
+            }
+            iteration ++; 
+            displaycalc.innerText = n1 + " " + operator + " " + n2;
+        });
+    });
+
+    hasil.addEventListener('click', function(){ 
+        if(iteration > 3){ 
+            n1 = parseFloat(n1); 
+            n2 = parseFloat(n2); 
+            if (operator === '+') 
+                hasil = n1 + n2; 
+            else if(operator === '-') 
+                hasil = n1 - n2; 
+            else if(operator === '*') 
+                hasil = n1 * n2; 
+            else if(operator === '/')
+                hasil = n1 / n2; 
+            displaycalc.innerText = hasil;
+            n1 = hasil; 
+            n2 = "";
+            operator = "";
+            iteration = 1;
+        }
+    });
+
+    acBtn.addEventListener('click', function () { 
+        n1 = "";
+        n2 = ""; 
+        operator = ""; 
+        iteration = 1;
+        displaycalc.innerText = "0";
+    });
+
+});
+</script>
