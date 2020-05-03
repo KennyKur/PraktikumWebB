@@ -1,3 +1,7 @@
+<?php
+   include 'config.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,41 +11,46 @@
    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<?php
-include 'config.php';
-?>
- 
-<table>
-  <tr>
-    <th>No</th>
-    <th>Nama</th>                         
-  </tr>
-  <?php 
-  $halaman = 1;
-  $page = isset($_GET["halaman"]) ? (int)$_GET["halaman"] : 1;
-  $mulai = ($page>1) ? ($page * $halaman) - $halaman : 0;
-  $result = mysqli_query($mysqli,"SELECT * FROM biodata");
-  $total = mysqli_num_rows($result);
-  $pages = ceil($total/$halaman);            
-  $query = mysqli_query($mysqli,"select * from biodata LIMIT $mulai, $halaman")or die(mysql_error);
-  $no =$mulai+1;
- 
- 
-  while ($data = mysqli_fetch_assoc($query)) {
-    ?>
-    <tr>
-      <td><?php echo $no++; ?></td>                  
-      <td><?php echo $data['nama']; ?></td>              
-                  
-    </tr>
- 
-    <?php               
-  } 
-  ?>
-  
- 
-</table>          
- 
+<div class="maincontainer">
+   <h1>Halaman Paginasi</h1>
+   <table>
+   <tr>
+      <th>No</th>
+      <th>Nama</th>     
+      <th>Umur</th>   
+      <th>Email</th>      
+      <th>Jenis Kelamin</th>           
+   </tr>
+   <?php 
+   $halaman = 1;
+   $page = isset($_GET["halaman"]) ? (int)$_GET["halaman"] : 1;
+   $mulai = ($page>1) ? ($page * $halaman) - $halaman : 0;
+   $result = mysqli_query($mysqli,"SELECT * FROM biodata");
+   $total = mysqli_num_rows($result);
+   $pages = ceil($total/$halaman);            
+   $query = mysqli_query($mysqli,"select * from biodata LIMIT $mulai, $halaman")or die(mysql_error);
+   $no =$mulai+1;
+   
+   
+   while ($data = mysqli_fetch_assoc($query)) {
+      ?>
+      <tr>
+         <td><?php echo $no++; ?></td>                  
+         <td><?php echo $data['nama']; ?></td>              
+         <td><?php echo $data['umur']; ?></td>   
+         <td><?php echo $data['email']; ?></td> 
+         <td><?php echo $data['jenis_kelamin']; ?></td>          
+      </tr>
+   
+      <?php               
+   } 
+   ?>
+   
+   
+   </table>          
+   
+</div>
+
 <div class="footer">
    <ul>
 
