@@ -1,0 +1,40 @@
+body{
+   font-family: sans-serif;
+}
+#filter {
+   background-position: 10px 12px; 
+   background-repeat: no-repeat; 
+   width: 60%; 
+   font-size: 16px; 
+   padding: 12px 20px 12px 40px; 
+   border: 1px solid #ddd;
+   margin-bottom: 20px; 
+ }
+ 
+ #list {
+   list-style-type: none;
+   padding: 0;
+   margin: 0;
+ }
+ 
+ #list li a {
+   border: 1px solid #ddd; 
+   margin-top: -1px; 
+   background-color: #f6f6f6;
+   padding: 12px; 
+   text-decoration: none; 
+   font-size: 18px;
+   color: black; 
+   display: block; 
+ }
+ 
+ #list li a:hover:not(.header) {
+   background-color: #eee;
+ }
+ button{
+    background-color: rgb(119, 211, 211);
+    color: white;
+    padding: 12px 20px 12px 20px; 
+    font-size: 16px; 
+    border: none;
+ }

@@ -28,7 +28,7 @@
    $result = mysqli_query($mysqli,"SELECT * FROM biodata");
    $total = mysqli_num_rows($result);
    $pages = ceil($total/$halaman);            
-   $query = mysqli_query($mysqli,"select * from biodata LIMIT $mulai, $halaman")or die(mysql_error);
+   $query = mysqli_query($mysqli,"select * from biodata LIMIT $mulai, $halaman");
    $no =$mulai+1;
    
    
