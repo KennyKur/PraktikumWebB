@@ -9,13 +9,19 @@ if(isset($_GET['id']))
 }
 if(isset($_POST['submit']))
 {
-  $buku_id = $_POST['buku_id'];
-  $tanggal_mulai = $_POST['tanggal_mulai'];
-  $tanggal_kembali = $_POST['tanggal_kembali'];
-  $user_id = $_SESSION['id'];
-  $sql1 = "INSERT INTO pinjam_buku(user_id, buku_id, waktu_pinjam, waktu_kembali) VALUES('$user_id','$buku_id','$tanggal_mulai','$tanggal_kembali')" ;
-  mysqli_query($conn,$sql1);
-  header("location: index.php");
+  if(isset($_SESSION['id']))
+  {
+    $buku_id = $_POST['buku_id'];
+    $tanggal_mulai = $_POST['tanggal_mulai'];
+    $tanggal_kembali = $_POST['tanggal_kembali'];
+    $user_id = $_SESSION['id'];
+    $sql1 = "INSERT INTO pinjam_buku(user_id, buku_id, waktu_pinjam, waktu_kembali) VALUES('$user_id','$buku_id','$tanggal_mulai','$tanggal_kembali')" ;
+    mysqli_query($conn,$sql1);
+    header("location: index.php");
+  }
+  else{
+    header("location: login.php");
+  }
 }
   
 ?>

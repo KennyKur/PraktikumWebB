@@ -78,7 +78,7 @@ include "../php/config.php";?>
                     <div>
                       <span class="badge badge-pill badge-primary"><?=$row['kategori']?></span>
                     </div>
-                    <a href="#" class="btn btn-primary mt-4">Lihat Detail</a>
+                    <a href="detail_buku.php?<?php echo"id=".$row['id'];?>" class="btn btn-primary mt-4">Lihat Detail</a>
                   </div>
                 </div>
               </div>
