@@ -1,5 +1,26 @@
 <?php
-  include '../php/config.php';
+
+include '../php/config.php';
+if(isset($_GET['act'])) {
+  $tindak  = $_GET['act'];
+  $id = $_GET['id'];
+  $buku_id = $_GET['buku_id'];
+  if($tindak == 'terima')
+  {
+    mysqli_query($conn,"UPDATE pinjam_buku SET status = 1 WHERE id = '$id'");
+    mysqli_query($conn,"UPDATE buku SET stok = stok-1 WHERE id = '$buku_id'");
+  }
+  else if($tindak == 'tolak')
+  {
+    mysqli_query($conn,"DELETE FROM buku WHERE id = '$id'");
+  }
+  else if($tindak == 'kembali')
+  {
+    mysqli_query($conn,"UPDATE pinjam_buku SET status = 2 WHERE id = '$id'");
+    mysqli_query($conn,"UPDATE buku SET stok = stok+1 WHERE id = '$buku_id'");
+  }
+    
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -38,7 +59,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">List Kategori</h1>
+            <h1 class="m-0 text-dark">List Buku</h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -50,36 +71,49 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">List Data Kategori</h3>
+              <h3 class="card-title">List Data Buku</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-            <a href="tambah_kategori.php"><button class="btn btn-primary"> Tambah Kategori</button></a>
             <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Nama Kategori</th>
-                  <th>Nomor rak</th>
-                  <th>edit</th>
+                  <th>Nama Peminjam</th>
+                  <th>Buku dipinjam</th>
+                  <th>waktu mulai pinjam</th>
+                  <th>waktu kembali pinjam</th>
+                  <th>Status</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
-                $sql = 'SELECT * FROM kategori';
+                $sql = 'SELECT pinjam_buku.id, pinjam_buku.waktu_pinjam, pinjam_buku.waktu_kembali, pinjam_buku.status, detail_users.nama as nama_user, buku.id as buku_id, buku.nama as judul FROM pinjam_buku INNER JOIN buku ON pinjam_buku.buku_id = buku.id INNER JOIN detail_users ON pinjam_buku.user_id = detail_users.user_id';
                 $data = queryMultiple($sql); 
                 foreach($data as $row)
                 {
                   echo"<tr>
-                    <td>".$row['nama']."</td>
-                    <td>".$row['nomor_rak']."</td>";?>
-                    <td><a href="edit_kategori.php?<?php echo"id=".$row['id'];?>"><button class="btn btn-warning"> edit</button></a></td>
+                    <td>".$row['nama_user']."</td>
+                    <td>".$row['judul']."</td>
+                    <td>".$row['waktu_pinjam']."</td>
+                    <td>".$row['waktu_kembali']."</td>";if($row['status']==0)
+                    {?>
+                    
+                      <td><a href="peminjaman.php?<?php echo"act=terima&buku_id=".$row['buku_id']."&id=".$row['id'];?>"><button class="btn btn-warning"> Terima</button></a>
+                      <a href="peminjaman.php?<?php echo"act=tolak&buku_id=".$row['buku_id']."&id=".$row['id'];?>"><button class="btn btn-success"> Tolak</button></a></td>
+                    <?php } else if ($row['status']==1){ ?>
+                      <td><a href="peminjaman.php?<?php echo"act=kembali&buku_id=".$row['buku_id']."&id=".$row['id'];?>"><button class="btn btn-success">Kembali</button></a></td>
+                      <?php } else if ($row['status']==2){ ?>
+                      <td>Sudah selesai</td>
+                      <?php } ?>
                   </tr>
                 <?php }?>
                 </tbody>
                 <tfoot>
                 <tr>
-                  <th>Nama Kategori</th>
-                  <th>Nomor rak</th>
+                  <th>Judul Buku</th>
+                  <th>Author</th>
+                  <th>stok</th>
+                  <th>kategori</th>
                   <th>edit</th>
                 </tr>
                 </tfoot>
