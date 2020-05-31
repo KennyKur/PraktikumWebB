@@ -48,9 +48,6 @@
 		<div class="sidebar-link">
 			<a href="kontak.php" style="text-decoration: none;"><h5>Kontak</h5></a>
 		</div>
-		<div style="text-align: center;">
-			<h5>Login sebagai : <br> Kenny Kurniadi <br>User</h5>
-		</div>
 		<br>
 	</div>
 	<div class="main">
